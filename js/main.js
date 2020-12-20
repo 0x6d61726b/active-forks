@@ -11,6 +11,12 @@ window.addEventListener('load', () => {
     const token = localStorage.getItem('token');
     if (token)
       document.getElementById('token').value = token;
+    else {
+      const authToken = getQueryVariableFromUrl("authToken");
+      if (authToken) {
+        document.getElementById('token').value = authToken;
+      }
+    }
   } catch {}
 
   if (repo) {
@@ -218,6 +224,17 @@ function getRepoFromUrl() {
   const urlRepo = location.hash && location.hash.slice(1);
 
   return urlRepo && decodeURIComponent(urlRepo);
+}
+
+function getQueryVariableFromUrl(variable)
+{
+  let queryVarArray = window.location.search.substring(1).split("&");
+  for (let queryVar of queryVarArray) {
+    let kvp = queryVar.split("=");
+    if (kvp[0] == variable)
+      return kvp[1];
+  }
+  return null;
 }
 
 async function updateData(repo, originalBranch, forks, api) {
