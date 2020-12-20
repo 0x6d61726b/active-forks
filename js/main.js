@@ -142,7 +142,7 @@ function initDT() {
 async function fetchAndShow(repo) {
   repo = repo.replace('https://github.com/', '');
   repo = repo.replace('http://github.com/', '');
-  repo = repo.replace('.git', '');
+  repo = repo.replace(/\.git$/, '');
 
   const token = document.getElementById('token').value;
   localStorage.setItem('token', token);
